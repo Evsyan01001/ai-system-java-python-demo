@@ -1,38 +1,68 @@
-#   AI System Demo (Java + Python)
+#   Java -> FastAPI File Upload Demo
 
-## 1. 项目简介
+## Overview
 
-    本项目实现了一个基于 Java + Python 的 AI 系统原型，用于支持伪造音视频检测任务。
+    This project demonstrates how to upload a file from Java client to a Python FastAPI server using 'multipart/form-data'.
 
-    系统采用前后端分离架构：
--   使用 FastAPI 构建 Python 后端服务，负责接收文件并进行处理
--   使用 Java 作为客户端，通过 HTTP 请求上传文件并获取结果
+    It is a minimal working example for:
+-   Java HTTP file upload
+-   FastAPI file receving
+-   Cross-language communication (Java -> Python)
 
-    该项目为后续集成 Deepfake 检测模型 （音频 + 视频）提供了完整的系统基础。
+## Project Structure
 
-## 2. 技术栈
+    |---java-client/
+    | |---CallAPI.java
+    | |---test.txt
+    |
+    |---python-server/
+    | |---main.py
+    | |---test.txt
+    |
+    |---.gitignore
+    |___README.md
 
-- Java
-- FastAPI
-- HTTP通信
+## Quick Start
 
-## 3. 功能
+### 1.Start Python Server
 
-- Java 调用 Python API
-- 文件上传
-- 返回结果
+    Bash
+    cd python-server
+    uvicorn main:app --reoad --port :8000
+    // server will run at:
+    // http://127.0.0.1:8000
 
-## 4. 如何运行
+### 2.Run Java Client
 
-### 启动 Python 服务
-    bash
-uvicorn api:app --reload --port 8000
+    Bash
+    cd java-client
+    javac CallAPI.java
+    java CallAPI test.txt
 
-### 运行Java
-Javac CallAPI.java
-java CallAPI
+## Response
 
-## 5. 示例
-curl -X POST "http://127.0.0.1:8000/Predict" \
-  -F "file=@test.txt"
+    Response: {"filename":"test.txt","size":4}
 
+## Key Concepts
+
+-   mulipart/form-data encoding
+-   Boundary separation in HTTP
+-   File streaming (Java -> Python)
+-   FastAPI Uplodafile
+
+## Notes
+
+-   Do not upload large files without streaming (memory risk)
+-   .class and __pycache__ are ignore via .gitignore
+-   This is a minimal demo, not production-ready
+
+## Future Improvements
+
+-   Add extra parameters (e.g., modal_type)
+-   Support video/audio upload
+-   Integrate DeepFake detection model
+-   Use streaming instead of full file read
+
+## Author
+
+-   Elvis Yan
